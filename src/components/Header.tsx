@@ -1,24 +1,27 @@
-import { Group, Text, Container } from "@mantine/core";
+import { Group, Text } from "@mantine/core";
+import { Image } from "@mantine/core";
+import HHImage from "../../public/HHImage.svg";
+import Point from "../../public/Point.svg";
 
 export function Header() {
   return (
     <header
       style={{
-        backgroundColor: "#232325",
-        height: "60px",
-        display: "flex",
         alignItems: "center",
-        borderBottom: "none",
+        height: "60px",
+        backgroundColor: "white",
+        padding: "10px",
       }}
     >
-      <Container size="lg" style={{ width: "100%" }}>
-        <Group justify="space-between" align="center">
-          {/* Логотип */}
-          <Text size="xl" fw={700} style={{ color: "white" }}>
-            Jobored
+      <Group justify="space-between">
+        <Group>
+          <Image h={30} w={30} src={HHImage} />
+          <Text size="xl" fw={500} style={{ color: "#000000" }}>
+            .FrontEnd
           </Text>
+        </Group>
 
-          {/* Ссылка "Вакансии FE" */}
+        <Group>
           <Text
             style={{
               color: "#5E96FC",
@@ -28,8 +31,10 @@ export function Header() {
           >
             Вакансии FE
           </Text>
+          <Image h={6} w={6} src={Point} />
         </Group>
-      </Container>
+        <Group></Group>
+      </Group>
     </header>
   );
 }

@@ -10,6 +10,9 @@ import {
   Container,
   Title,
   Stack,
+  Flex,
+  Text,
+  Image,
 } from "@mantine/core";
 import "./App.css";
 import type { RootState } from "./store/store";
@@ -23,6 +26,7 @@ import {
 } from "./reducers/fetchSlice";
 import type { AppDispatch } from "./store/store";
 import { Header } from "./components/Header";
+import Plus from "../public/Plus.svg";
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
@@ -32,8 +36,11 @@ function App() {
   const [newSkill, setNewSkill] = useState("");
 
   useEffect(() => {
-    dispatch(fetchVacancies());
-  }, [dispatch, page, search, area, skills]);
+    const timer = setTimeout(() => {
+      dispatch(fetchVacancies());
+    }, 600);
+    return () => clearTimeout(timer);
+  }, [dispatch, page, area, skills, search]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setSearch(e.target.value));
@@ -60,34 +67,50 @@ function App() {
   return (
     <>
       <Header />
-      <Container size="lg" py="xl">
-        <Title order={1} mb="xl">
-          Список вакансий по профессии Frontend-разработчик
-        </Title>
 
-        {/* Фильтры */}
-        <Stack gap="md" mb="xl">
-          <TextInput
-            placeholder="Поиск по названию вакансии или компании"
-            value={search}
-            onChange={handleSearchChange}
-          />
+      <Container>
+        <div className="titleSearch">
+          <div className="title">
+            <h2>Список вакансий</h2>
+            <h3>по профессии Frontend-разработчик</h3>
+          </div>
+          <div className="search">
+            <TextInput
+              placeholder="Должность или название компании"
+              value={search}
+              onChange={handleSearchChange}
+            />
+          </div>
+        </div>
 
-          <Select
-            placeholder="Выберите город"
-            data={[
-              { value: "", label: "Все города" },
-              { value: "1", label: "Москва" },
-              { value: "2", label: "Санкт-Петербург" },
-            ]}
-            value={area}
-            onChange={handleAreaChange}
-          />
+        <Flex>
+          <Stack w={400} style={{ width: "317px" }}>
+            <Group
+              style={{
+                padding: "24px",
+                backgroundColor: "white",
+                borderRadius: "12px",
+              }}
+            >
+              <Text size="m" fw={700}>
+                Ключевые навыки
+              </Text>
 
-          <div>
-            <Group gap="xs" mb="xs">
+              <Group justify="space-between" style={{ width: "100%" }}>
+                <TextInput
+                  size="md"
+                  placeholder="Навык"
+                  value={newSkill}
+                  onChange={(e) => setNewSkill(e.target.value)}
+                />
+                <Button size="md" onClick={handleAddSkill}>
+                  <Image src={Plus} w={16} h={16} />
+                </Button>
+              </Group>
+
               {skills.map((skill) => (
                 <Pill
+                  size="md"
                   key={skill}
                   withRemoveButton
                   onRemove={() => dispatch(removeSkill(skill))}
@@ -96,69 +119,64 @@ function App() {
                 </Pill>
               ))}
             </Group>
-            <Group>
-              <TextInput
-                placeholder="Добавить навык"
-                value={newSkill}
-                onChange={(e) => setNewSkill(e.target.value)}
-                // onKeyPress={handleKeyPress}
-              />
-              <Button onClick={handleAddSkill}>+</Button>
-            </Group>
-          </div>
-        </Stack>
 
-        {/* Список вакансий */}
-        <Stack gap="md" mb="xl">
-          {vacancies.map((vacancy) => (
-            <div
-              key={vacancy.id}
+            <Select
+              data={[
+                { value: "", label: "Все города" },
+                { value: "1", label: "Москва" },
+                { value: "2", label: "Санкт-Петербург" },
+              ]}
+              value={area}
+              onChange={handleAreaChange}
               style={{
-                border: "1px solid #dee2e6",
-                borderRadius: "8px",
-                padding: "20px",
+                padding: "24px",
                 backgroundColor: "white",
+                borderRadius: "12px",
               }}
-            >
-              <Title order={3} mb="xs">
-                {vacancy.name}
-              </Title>
+            />
+          </Stack>
 
-              <Group gap="xl" mb="xs">
-                <span>
-                  <strong>Компания:</strong> {vacancy.employer.name}
-                </span>
-                <span>
-                  <strong>Город:</strong> {vacancy.area.name}
-                </span>
-                <span>
-                  <strong>Опыт:</strong> {vacancy.experience.name}
-                </span>
-              </Group>
+          <Stack w={660} style={{ alignItems: "center" }}>
+            {vacancies.map((vacancy) => (
+              <Stack
+                className="vacancyCard"
+                key={vacancy.id}
+                style={{
+                  border: "1px solid #dee2e6",
+                  borderRadius: "8px",
+                  padding: "20px",
+                  backgroundColor: "white",
+                }}
+              >
+                <Title order={3} mb="xs">
+                  {vacancy.name}
+                </Title>
 
-              {vacancy.salary && (
-                <p>
-                  <strong>Зарплата:</strong> {vacancy.salary.from || ""} -{" "}
-                  {vacancy.salary.to || ""} {vacancy.salary.currency}
-                </p>
-              )}
+                <Group>
+                  {vacancy.salary && (
+                    <p>
+                      {vacancy.salary.from} - {vacancy.salary.to}{" "}
+                      {vacancy.salary.currency}
+                    </p>
+                  )}
+                  <p>Опыт: {vacancy.experience.name}</p>
+                </Group>
 
-              <Group gap="md" mt="md">
-                <Button variant="outline">Смотреть вакансию</Button>
-                <Button
-                  component="a"
-                  target="_blank"
-                  variant="filled"
-                  color="blue"
-                >
-                  Откликнуться
-                </Button>
-              </Group>
-            </div>
-          ))}
-        </Stack>
+                <span>{vacancy.employer.name}</span>
 
-        {/* Пагинация */}
+                <span>{vacancy.area.name}</span>
+
+                <Group gap="md" mt="md">
+                  <Button color="black">Смотреть вакансию</Button>
+                  <Button color="lightgrey">
+                    <span style={{ color: "black" }}>Откликнуться</span>
+                  </Button>
+                </Group>
+              </Stack>
+            ))}
+          </Stack>
+        </Flex>
+
         {totalPages > 0 && (
           <Pagination
             total={totalPages}

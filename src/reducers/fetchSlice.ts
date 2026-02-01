@@ -5,7 +5,6 @@ import {
 } from "@reduxjs/toolkit";
 import ky from "ky";
 import type { Vacancy, VacanciesResponse } from "../types/types";
-import { useEffect } from "react";
 
 interface VacanciesState {
   vacancies: Vacancy[];
@@ -45,8 +44,10 @@ export const fetchVacancies = createAsyncThunk(
       if (area) {
         URL += `&area=${area}`;
       }
+      console.log(URL);
+
       if (skills) {
-        URL += `&skill_set=${skills.join(",")}`;
+        URL += `&skills=${skills.join(",")}`;
       }
 
       const response = await ky.get(URL).json();
