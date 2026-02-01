@@ -34,7 +34,7 @@ export interface Vacancy {
   area: Area;
   salary: Salary;
   employer: Employer;
-  work_format: WorkFormat;
+  work_format: WorkFormat[];
   experience: Experience;
   key_skill: Key_skill;
 }

@@ -17,7 +17,8 @@ h3 {
 }
 
 .vacancyCard {
-  height: 248px;
-  width: 659px;
+  height: 250px;
+  width: 660px;
   border-radius: 12px;
+  padding: 24px;
 }

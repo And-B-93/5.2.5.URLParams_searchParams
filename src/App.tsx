@@ -13,6 +13,7 @@ import {
   Flex,
   Text,
   Image,
+  Badge,
 } from "@mantine/core";
 import "./App.css";
 import type { RootState } from "./store/store";
@@ -139,32 +140,49 @@ function App() {
           <Stack w={660} style={{ alignItems: "center" }}>
             {vacancies.map((vacancy) => (
               <Stack
+                gap="xs"
                 className="vacancyCard"
                 key={vacancy.id}
                 style={{
                   border: "1px solid #dee2e6",
-                  borderRadius: "8px",
-                  padding: "20px",
+                  borderRadius: "12px",
                   backgroundColor: "white",
                 }}
               >
-                <Title order={3} mb="xs">
+                <Title order={5} mb="xs">
                   {vacancy.name}
                 </Title>
 
-                <Group>
-                  {vacancy.salary && (
-                    <p>
-                      {vacancy.salary.from} - {vacancy.salary.to}{" "}
-                      {vacancy.salary.currency}
-                    </p>
-                  )}
-                  <p>Опыт: {vacancy.experience.name}</p>
+                <Group h={24}>
+                  <Text>
+                    {vacancy.salary ? (
+                      <p>
+                        {vacancy.salary.from} - {vacancy.salary.to}{" "}
+                        {vacancy.salary.currency}
+                      </p>
+                    ) : (
+                      "з/п не указана"
+                    )}
+                  </Text>
+                  <Text>Опыт: {vacancy.experience.name}</Text>
                 </Group>
 
-                <span>{vacancy.employer.name}</span>
+                <Text h={24} style={{ color: "lightgray" }}>
+                  {vacancy.employer.name}
+                </Text>
 
-                <span>{vacancy.area.name}</span>
+                <Text h={24}>
+                  {vacancy.work_format.map((format) => {
+                    if (format.id === "REMOTE")
+                      return <Badge>{format.name}</Badge>;
+                    if (format.id === "HYBRID")
+                      return <Badge color="black">{format.name}</Badge>;
+                    if (format.id === "ON_SITE")
+                      return <Badge color="gray">{format.name}</Badge>;
+                  })}
+                </Text>
+
+                <Text h={24}>{vacancy.area.name}</Text>
 
                 <Group gap="md" mt="md">
                   <Button color="black">Смотреть вакансию</Button>
