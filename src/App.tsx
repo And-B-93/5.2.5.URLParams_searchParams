@@ -62,8 +62,32 @@ function App() {
     dispatch(setPage(newPage - 1));
   };
 
-  if (loading) return <div>Загрузка...</div>;
-  if (error) return <div>Ошибка: {error}</div>;
+  if (loading)
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        Загрузка...
+      </div>
+    );
+  if (error)
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        Ошибка: {error}
+      </div>
+    );
 
   const iconMap = <IconMapPin />;
   const iconSearch = <IconSearch />;
