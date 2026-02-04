@@ -102,7 +102,7 @@ function App() {
     <>
       <Header />
 
-      <Container>
+      <Container size={1024}>
         <div className="titleSearch">
           <div className="title">
             <h2>Список вакансий</h2>
@@ -122,11 +122,16 @@ function App() {
           </div>
         </div>
 
-        <Flex>
+        <Flex
+          gap="xs"
+          justify="center"
+          align="flex-start"
+          direction="row"
+          wrap="nowrap"
+        >
           <Stack
-            w={400}
+            w={317}
             style={{
-              minWidth: "320px",
               margin: "0 12px",
             }}
           >
@@ -183,7 +188,7 @@ function App() {
             />
           </Stack>
 
-          <Stack w={660} style={{ alignItems: "center" }}>
+          <Stack style={{ alignItems: "center" }}>
             {vacancies.map((vacancy) => (
               <Stack
                 gap="xs"
@@ -193,8 +198,9 @@ function App() {
                   borderRadius: "12px",
                   backgroundColor: "white",
                   minHeight: "250px !important",
-                  width: "500px ",
+                  width: "660px",
                   padding: "24px",
+                  margin: "0 12px",
                 }}
               >
                 <Title order={5}>{vacancy.name}</Title>

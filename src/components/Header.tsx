@@ -11,6 +11,7 @@ export function Header() {
         height: "60px",
         backgroundColor: "white",
         padding: "10px",
+        maxWidth: "1440px",
       }}
     >
       <Group justify="space-between">
