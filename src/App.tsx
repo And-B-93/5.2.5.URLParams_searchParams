@@ -1,6 +1,6 @@
 import Vacancies from "./pages/Vacancies";
 import { Header } from "./components/Header";
-import { SnippetVacancy } from "./pages/SnippetVacancy";
+import { DescriptionVacancy } from "./pages/DescriptionVacancy";
 import { Route, Routes } from "react-router-dom";
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Vacancies />} />
         <Route path="/vacancies" element={<Vacancies />} />
-        <Route path="/vacancies/:id" element={<SnippetVacancy />} />
+        <Route path="/vacancies/:id" element={<DescriptionVacancy />} />
       </Routes>
     </>
   );

@@ -1,12 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import type {
-  Area,
-  Employer,
-  Experience,
-  Key_skill,
-  Salary,
-  WorkFormat,
-} from "../types/types";
+import type { Vacancy } from "../types/types";
 import { useEffect, useState } from "react";
 import {
   Badge,
@@ -20,20 +13,7 @@ import {
 import ky from "ky";
 import { Spinner } from "../components/Spinner";
 
-interface Vacancy {
-  id: string;
-  name: string;
-  area: Area;
-  salary: Salary;
-  employer: Employer;
-  work_format: WorkFormat[];
-  experience: Experience;
-  key_skill: Key_skill;
-  description: string;
-  url: string;
-}
-
-export function SnippetVacancy() {
+export function DescriptionVacancy() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [vacancy, setVacancy] = useState<Vacancy | null>(null);
