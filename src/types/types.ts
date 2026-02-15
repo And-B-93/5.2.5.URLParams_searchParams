@@ -37,6 +37,7 @@ export interface Vacancy {
   work_format: WorkFormat[];
   experience: Experience;
   key_skill: Key_skill;
+  description: string;
 }
 
 export interface VacanciesResponse {

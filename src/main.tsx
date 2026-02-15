@@ -1,4 +1,5 @@
 import { StrictMode } from "react";
+import { BrowserRouter } from "react-router-dom";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import { MantineProvider } from "@mantine/core";
@@ -11,10 +12,12 @@ const store = setupStore();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <Provider store={store}>
-      <MantineProvider>
-        <App />
-      </MantineProvider>
-    </Provider>
+    <BrowserRouter>
+      <Provider store={store}>
+        <MantineProvider>
+          <App />
+        </MantineProvider>
+      </Provider>
+    </BrowserRouter>
   </StrictMode>,
 );
