@@ -35,8 +35,6 @@ export function DescriptionVacancy() {
         } else {
           setError("Oшибка");
         }
-      } finally {
-        setLoading(false);
       }
     };
     fetchVacancy();
