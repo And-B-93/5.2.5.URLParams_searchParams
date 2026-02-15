@@ -13,12 +13,12 @@ import {
   Button,
   Container,
   Group,
-  Loader,
   Stack,
   Text,
   Title,
 } from "@mantine/core";
 import ky from "ky";
+import { Spinner } from "../components/Spinner";
 
 interface Vacancy {
   id: string;
@@ -62,19 +62,7 @@ export function SnippetVacancy() {
     fetchVacancy();
   }, [id]);
 
-  if (loading)
-    return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-        }}
-      >
-        <Loader size="xl" />
-      </div>
-    );
+  if (loading) return <Spinner />;
   if (error) return <Text c="red">{error}</Text>;
   if (!vacancy) return <Text>Вакансия не найдена</Text>;
 

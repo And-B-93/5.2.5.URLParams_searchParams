@@ -13,7 +13,6 @@ import {
   Flex,
   Text,
   Badge,
-  Loader,
 } from "@mantine/core";
 import "./Vacancies.css";
 import type { RootState } from "../store/store";
@@ -26,9 +25,9 @@ import {
   setPage,
 } from "../reducers/fetchSlice";
 import type { AppDispatch } from "../store/store";
-
 import { IconMapPin, IconPlus, IconSearch } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
+import { Spinner } from "../components/Spinner";
 
 function Vacancies() {
   const dispatch = useDispatch<AppDispatch>();
@@ -70,19 +69,7 @@ function Vacancies() {
     }
   };
 
-  if (loading)
-    return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-        }}
-      >
-        <Loader size="xl" />
-      </div>
-    );
+  if (loading) return <Spinner />;
   if (error)
     return (
       <div
