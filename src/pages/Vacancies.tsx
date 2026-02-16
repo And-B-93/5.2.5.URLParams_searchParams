@@ -38,14 +38,14 @@ function Vacancies() {
   const [newSkill, setNewSkill] = useState("");
 
   useEffect(() => {
-    const urlSearch = searchParams.get("search") ?? "";
-    const urlArea = searchParams.get("city") ?? "";
-    const urlSkills = searchParams.get("skills")?.split(",") ?? [];
+    const urlSearch = searchParams.get("search") || "";
+    const urlArea = searchParams.get("city") || "";
+    const urlSkills = searchParams.get("skills")?.split(",") || [];
 
     if (urlSearch) dispatch(setSearch(urlSearch));
     if (urlArea) dispatch(setArea(urlArea));
     if (urlSkills.length) {
-      urlSkills.forEach((skill) => dispatch(addSkill(skill)));
+      urlSkills.map((skill) => dispatch(addSkill(skill)));
     }
   }, []);
 
