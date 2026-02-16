@@ -46,7 +46,11 @@ export function DescriptionVacancy() {
       <Button variant="subtle" onClick={() => navigate(-1)} mb="lg">
         Назад к списку вакансий
       </Button>
-      <VacancyCard vacancy={vacancy} showDescription={true} />
+      <VacancyCard
+        vacancy={vacancy}
+        showDescription={true}
+        showButtonSeeVacancy={false}
+      />
     </Container>
   );
 }
