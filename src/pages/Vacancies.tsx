@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   TextInput,
@@ -24,11 +25,11 @@ import {
 } from "../reducers/fetchSlice";
 import type { AppDispatch } from "../store/store";
 import { IconMapPin, IconPlus, IconSearch } from "@tabler/icons-react";
-
 import { Spinner } from "../components/Spinner";
 import { VacancyCard } from "../components/VacancyCard";
 
 function Vacancies() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch<AppDispatch>();
   const { vacancies, loading, error, totalPages, page, search, area, skills } =
     useSelector((state: RootState) => state.fetch);
@@ -36,11 +37,24 @@ function Vacancies() {
   const [newSkill, setNewSkill] = useState("");
 
   useEffect(() => {
+    const urlSearch = searchParams.get("search") ?? "";
+    const urlArea = searchParams.get("city") ?? "";
+    //const urlSkills = searchParams.get("skills")?.split(",") ?? [];
+
+    dispatch(setSearch(urlSearch));
+    dispatch(setArea(urlArea));
+    //dispatch(addSkill(urlSkills));
+
     dispatch(fetchVacancies());
   }, [dispatch, page, area, skills]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setSearch(e.target.value));
+    setSearchParams({
+      search: e.target.value,
+      city: area,
+      skills: skills.join(","),
+    });
   };
 
   const handleSearchClick = () => {
