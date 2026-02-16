@@ -30,6 +30,7 @@ import { VacancyCard } from "../components/VacancyCard";
 
 function Vacancies() {
   const [searchParams, setSearchParams] = useSearchParams();
+
   const dispatch = useDispatch<AppDispatch>();
   const { vacancies, loading, error, totalPages, page, search, area, skills } =
     useSelector((state: RootState) => state.fetch);
@@ -39,22 +40,29 @@ function Vacancies() {
   useEffect(() => {
     const urlSearch = searchParams.get("search") ?? "";
     const urlArea = searchParams.get("city") ?? "";
-    //const urlSkills = searchParams.get("skills")?.split(",") ?? [];
+    const urlSkills = searchParams.get("skills")?.split(",") ?? [];
 
-    dispatch(setSearch(urlSearch));
-    dispatch(setArea(urlArea));
-    //dispatch(addSkill(urlSkills));
+    if (urlSearch) dispatch(setSearch(urlSearch));
+    if (urlArea) dispatch(setArea(urlArea));
+    if (urlSkills.length) {
+      urlSkills.forEach((skill) => dispatch(addSkill(skill)));
+    }
+  }, []);
 
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (search) params.set("search", search);
+    if (area) params.set("city", area);
+    if (skills.length) params.set("skills", skills.join(","));
+    setSearchParams(params);
+  }, [search, area, skills]);
+
+  useEffect(() => {
     dispatch(fetchVacancies());
   }, [dispatch, page, area, skills]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setSearch(e.target.value));
-    setSearchParams({
-      search: e.target.value,
-      city: area,
-      skills: skills.join(","),
-    });
   };
 
   const handleSearchClick = () => {
