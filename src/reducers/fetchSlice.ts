@@ -26,7 +26,7 @@ const initialState: VacanciesState = {
   totalPages: 0,
   search: "",
   area: "",
-  skills: ["TypeScript", "React", "Redux"],
+  skills: [],
   page: 0,
 };
 
