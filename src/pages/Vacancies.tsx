@@ -40,11 +40,8 @@ function Vacancies() {
   useEffect(() => {
     const urlSearch = searchParams.get("search") || "";
     const urlArea = searchParams.get("city") || "";
-    const urlSkills = searchParams.get("skills")?.split(",") || [
-      "TypeScript",
-      "React",
-      "Redux",
-    ];
+    const urlSkills = searchParams.get("skills")?.split(",") ||
+      [] || ["TypeScript", "React", "Redux"];
 
     if (urlSearch) dispatch(setSearch(urlSearch));
     if (urlArea) dispatch(setArea(urlArea));
